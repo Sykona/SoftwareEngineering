@@ -16,6 +16,7 @@ public class Test {
 			printResult(sc.nextLine().split(" "));
 			sc.close();
 		}
+
 	}
 	
 	public static void printResult(String[] args){

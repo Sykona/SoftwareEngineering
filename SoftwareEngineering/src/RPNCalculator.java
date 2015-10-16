@@ -1,60 +1,15 @@
 import java.util.Locale;
 import java.util.Scanner;
 
-/**
- * Implementation of an "reverse-polish-notation"
- * calculator using a LIFO stack.  
- * 
- * @author Oliver Remy
- * @author Sebastian Strumegger
- */
+
 public class RPNCalculator {
 	
 	private Stack<Number> stack;
 	
-	/**
-	 * Standard constructor for the calculator.
-	 * @param stack	the stack, which is used
-	 */
 	public RPNCalculator(Stack<Number> stack){
 		this.stack = stack;
 	}
 	
-	public static void main(String[] args) {
-		if (args.length > 0) {
-			for (String s : args)
-				System.out.print(s + " ");
-			System.out.println();
-			printResult(args);
-		} else {
-			Scanner sc = new Scanner(System.in);
-			System.out.println("Please enter arithmetic problem: ");
-			printResult(sc.nextLine().split(" "));
-			sc.close();
-		}
-	}
-	
-	/**
-	 * Prints the result of a calculation to the command line.
-	 * @param args String array of arguments to calculate
-	 */
-	public static void printResult(String[] args){
-		RPNCalculator calculator = new RPNCalculator(new ListStack<Number>());
-		try {
-			System.out.println("Solution: " + calculator.calculate(args));
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	/**
-	 * Calculates a arithmetic problem in "reverse-polish-notation"
-	 * Example:
-	 * 	input: {"1.5" "2" "+" "3" "4" "-" "*"}
-	 * 	output: -3.5
-	 * @param args String array of arguments to calculate
-	 * @return the solution of the problem
-	 */
 	public Number calculate(String[] args){
 		for(String element: args)
 			switch(element){
