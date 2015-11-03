@@ -33,7 +33,9 @@ public class Reconstructor {
 
 		
 		/* ******** package ******** */
-		ps.print("package " + c.getPackage().getName() + ";\n\n");
+		
+		if (c.getPackage() != null)
+			ps.print("package " + c.getPackage().getName() + ";\n\n");
 
 		
 		/* ******** imports ******** */
@@ -89,7 +91,7 @@ public class Reconstructor {
 			ps.print(getExceptionsString(constructor) + "{\n");
 			ps.print("\t\t");
 			ps.print("System.out.println(\"constructor\");\n");
-			ps.print("}\n\n");
+			ps.print("\t}\n\n");
 		}
 
 		
@@ -151,7 +153,7 @@ public class Reconstructor {
 		
 		// add all used classes to a HashSet (except for Superclass)
 		
-		for (Method m : c.getMethods())
+		for (Method m : c.getDeclaredMethods())
 			usedClasses.add(m.getReturnType());
 		
 		for (Class i : c.getInterfaces())
@@ -186,9 +188,9 @@ public class Reconstructor {
 		
 		for (Class cl : usedClasses) {
 			
-			if(cl.getPackage() != null) {
+			if(cl.getPackage() != null && c.getPackage() != null) {
 
-				boolean notInSamePackage = !(cl.getPackage().getName().contains(c.getPackage().getName()));
+				boolean notInSamePackage = !(cl.getPackage().getName().equals(c.getPackage().getName()));
 				boolean notPrimitive = !(cl.isPrimitive());
 				boolean notInJavaLangPackage = !(cl.getPackage().getName().equals("java.lang"));
 				
