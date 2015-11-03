@@ -15,8 +15,5 @@ public class test {
 		re.reconstruct(ArrayListDummy, new PrintStream("ArrayListDummy.java"));
 		re.reconstruct(linkedListClass, new PrintStream("LinkedListDummy.java"));
 		
-		
-
 	}
-
 }
