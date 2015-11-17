@@ -8,7 +8,7 @@ public class Test {
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 		
 		File a = new File("/home/sebastian/Documents/Uni/se/A5/input.txt");
-		ConcurrentRingBuffer<String> buffer = new ConcurrentRingBuffer<String>(150);
+		ConcurrentRingBuffer<String> buffer = new ConcurrentRingBuffer<String>(50);
 		
 		Producer<String> p = new Producer<String>(buffer, a);
 		Consumer<String> c1 = new Consumer<String>(buffer);
@@ -26,7 +26,8 @@ public class Test {
 			e.printStackTrace();
 		}
 		
-		if (c1.getState() == Thread.State.WAITING && c2.getState() == Thread.State.WAITING) {
+//		if (c1.getState() == Thread.State.WAITING && c2.getState() == Thread.State.WAITING) {
+		if (buffer.isEmpty()) {
 			c1.interrupt();
 			c2.interrupt();
 			

@@ -7,6 +7,8 @@ public class ConcurrentRingBuffer<T> {
 	private volatile int tail;
 	private final int CAPACITY;
 	
+	private volatile Object waitLock = new Object();
+	
 	
 	public ConcurrentRingBuffer(int size) {
 		
@@ -36,6 +38,8 @@ public class ConcurrentRingBuffer<T> {
 			
 			buffer[head] = item;
 			head = Math.floorMod((head - 1), CAPACITY);
+			
+	//		System.out.println("A | head: " + head + " | tail: " + tail);
 
 			this.notifyAll();
 		}
@@ -55,21 +59,25 @@ public class ConcurrentRingBuffer<T> {
 			final T oldTailItem = buffer[oldTail];
 			buffer[oldTail] = null;
 			
-			
+	//		System.out.println("R | head: " + head + " | tail: " + tail);
 			this.notifyAll();
 			return oldTailItem;
 		}
 	}
 	
-	public synchronized boolean isEmpty() {
-		return tail == head;
+	public boolean isEmpty() {
+		synchronized(waitLock) {
+			return tail == head;
+		}
 	}
 	
-	public synchronized boolean isFull() {
-		return Math.floorMod((head - tail), CAPACITY) == 1;
+	public boolean isFull() {
+		synchronized(waitLock) {
+			return Math.floorMod((head - tail), CAPACITY) == 1;
+		}
 	}
 	
-	public String toString() {
+	public synchronized String toString() {
 		
 		StringBuilder sb = new StringBuilder();
 		
