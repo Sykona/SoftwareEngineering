@@ -10,6 +10,8 @@ public class Producer<T> extends Thread {
 	private BufferedReader reader;
 	private volatile int produced;
 	private volatile boolean done;
+	
+	Object lock = new Object();
 
 	public Producer(ConcurrentRingBuffer<T> buffer, File file) throws FileNotFoundException {
 		this.buffer = buffer;
