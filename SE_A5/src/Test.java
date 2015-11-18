@@ -7,14 +7,14 @@ public class Test {
 
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 		
-		File a = new File("/home/sebastian/Documents/Uni/se/A5/input.txt");
+		File a = new File("/home/oremy/Documents/uni_salzburg/3.Semester/softwareEngineering/input.txt");
 		ConcurrentRingBuffer<String> buffer = new ConcurrentRingBuffer<String>(50);
 		
 		Producer<String> p = new Producer<String>(buffer, a);
-		Consumer<String> c1 = new Consumer<String>(buffer);
-		Consumer<String> c2 = new Consumer<String>(buffer);
-
-
+		Consumer<String> c1 = new Consumer<String>(buffer, System.out);
+		Consumer<String> c2 = new Consumer<String>(buffer, System.err);
+		
+		
 		
 		p.start();
 		c1.start();
