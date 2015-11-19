@@ -19,14 +19,14 @@ public class Test {
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 		
 		String filePath = "/home/sebastian/Documents/Uni/se/A5/input.txt";
+		File inputFile = new File(filePath);
 		
 		ConcurrentRingBuffer<String> buffer = new ConcurrentRingBuffer<String>(50);
-		File inputFile = new File(filePath);
 		
 		Producer<String> p = new Producer<String>("p", buffer, inputFile);
 		Consumer<String> c1 = new Consumer<String>("c1", buffer, System.out);
 		Consumer<String> c2 = new Consumer<String>("c2", buffer, System.err);
-		
+	
 		p.start();
 		c1.start();
 		c2.start();

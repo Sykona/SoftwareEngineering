@@ -49,6 +49,7 @@ public class Producer<T> extends Thread {
 				buffer.put((T)line);
 				produced++;
 			}
+			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) { }

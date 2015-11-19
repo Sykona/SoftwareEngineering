@@ -41,7 +41,9 @@ public class Consumer<T> extends Thread{
 				consumed++;
 				
 			}
-		} catch (InterruptedException e) { }
+		} catch (InterruptedException e) { 
+			stream.close();
+		}
 	}
 	
 	
