@@ -4,22 +4,41 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * The Class Producer.
+ *
+ * @author Oliver Remy
+ * @author Sebastian Strumegger
+ * 
+ * @param <T> the generic type
+ */
 public class Producer<T> extends Thread {
+
 
 	private ConcurrentRingBuffer<T> buffer;
 	private BufferedReader reader;
-	private volatile int produced;
-	private volatile boolean done;
-	
-	Object lock = new Object();
+	private int produced;
 
-	public Producer(ConcurrentRingBuffer<T> buffer, File file) throws FileNotFoundException {
+	
+	/**
+	 * Instantiates a new producer.
+	 *
+	 * @param name the name
+	 * @param buffer the thread-save FIFO-Buffer
+	 * @param file the input-file
+	 * @throws FileNotFoundException the file not found exception
+	 */
+	public Producer(String name, ConcurrentRingBuffer<T> buffer, File file) throws FileNotFoundException {
+		super(name);
 		this.buffer = buffer;
-		reader = new BufferedReader(new FileReader(file));
+		this.reader = new BufferedReader(new FileReader(file));
 		produced = 0;
-		done = false;
 	}
 	
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	@SuppressWarnings("unchecked")
 	public void run() {
 		
@@ -28,20 +47,20 @@ public class Producer<T> extends Thread {
 		try {
 			while ((line = reader.readLine()) != null && !isInterrupted()) {
 				buffer.put((T)line);
-				System.out.println("added " + line);
 				produced++;
 			}
-			done = true;
-		} catch (IOException | InterruptedException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} catch (InterruptedException e) { }
 	}
 	
-	public synchronized int getProduced() {
+	
+	/**
+	 * Gets the number of produced items
+	 *
+	 * @return the produced
+	 */
+	public int getProduced() {
 		return produced;
-	}
-	
-	public synchronized boolean isDone() {
-		return done;
 	}
 }
