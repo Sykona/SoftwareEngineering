@@ -8,10 +8,10 @@ import java.io.PrintStream;
  * 
  * @param <T> the generic type
  */
-public class Consumer<T> extends Thread{
+public class Consumer extends Thread{
 
 
-	private ConcurrentRingBuffer<T> buffer;
+	private ConcurrentRingBuffer<String> buffer;
 	private PrintStream stream;
 	private int consumed;
 
@@ -23,7 +23,7 @@ public class Consumer<T> extends Thread{
 	 * @param buffer the thread-save FIFO-Buffer
 	 * @param stream the stream
 	 */
-	public Consumer(String name, ConcurrentRingBuffer<T> buffer, PrintStream stream) {
+	public Consumer(String name, ConcurrentRingBuffer<String> buffer, PrintStream stream) {
 		super(name);
 		this.buffer = buffer;
 		this.stream = stream;
@@ -41,9 +41,7 @@ public class Consumer<T> extends Thread{
 				consumed++;
 				
 			}
-		} catch (InterruptedException e) { 
-			stream.close();
-		}
+		} catch (InterruptedException e) { }
 	}
 	
 	

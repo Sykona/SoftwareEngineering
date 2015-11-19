@@ -23,10 +23,12 @@ public class Test {
 		
 		ConcurrentRingBuffer<String> buffer = new ConcurrentRingBuffer<String>(50);
 		
-		Producer<String> p = new Producer<String>("p", buffer, inputFile);
-		Consumer<String> c1 = new Consumer<String>("c1", buffer, System.out);
-		Consumer<String> c2 = new Consumer<String>("c2", buffer, System.err);
-	
+		Producer p = new Producer("p", buffer, inputFile);
+		Consumer c1 = new Consumer("c1", buffer, System.out);
+		Consumer c2 = new Consumer("c2", buffer, System.err);
+		
+		
+		
 		p.start();
 		c1.start();
 		c2.start();

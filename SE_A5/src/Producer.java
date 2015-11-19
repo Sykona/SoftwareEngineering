@@ -12,10 +12,10 @@ import java.io.IOException;
  * 
  * @param <T> the generic type
  */
-public class Producer<T> extends Thread {
+public class Producer extends Thread {
 
 
-	private ConcurrentRingBuffer<T> buffer;
+	private ConcurrentRingBuffer<String> buffer;
 	private BufferedReader reader;
 	private int produced;
 
@@ -28,7 +28,7 @@ public class Producer<T> extends Thread {
 	 * @param file the input-file
 	 * @throws FileNotFoundException the file not found exception
 	 */
-	public Producer(String name, ConcurrentRingBuffer<T> buffer, File file) throws FileNotFoundException {
+	public Producer(String name, ConcurrentRingBuffer<String> buffer, File file) throws FileNotFoundException {
 		super(name);
 		this.buffer = buffer;
 		this.reader = new BufferedReader(new FileReader(file));
@@ -39,14 +39,13 @@ public class Producer<T> extends Thread {
 	/* (non-Javadoc)
 	 * @see java.lang.Thread#run()
 	 */
-	@SuppressWarnings("unchecked")
 	public void run() {
 		
 		String line;
 		
 		try {
 			while ((line = reader.readLine()) != null && !isInterrupted()) {
-				buffer.put((T)line);
+				buffer.put(line);
 				produced++;
 			}
 			reader.close();
