@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * The Class Test.
@@ -8,6 +9,8 @@ import java.io.FileNotFoundException;
  * @author Sebastian Strumegger
  */
 public class Test {
+	
+	private static ArrayList<Thread> threads = new ArrayList<Thread>();
 
 	/**
 	 * The main method for testing our Producer-Consumer-Pattern with the array-based buffer
@@ -26,6 +29,10 @@ public class Test {
 		Producer p = new Producer("p", buffer, inputFile);
 		Consumer c1 = new Consumer("c1", buffer, System.out);
 		Consumer c2 = new Consumer("c2", buffer, System.err);
+		
+		threads.add(p);
+		threads.add(c1);
+		threads.add(c2);
 		
 		
 		
@@ -54,5 +61,13 @@ public class Test {
 		System.out.println(p.getName() + " produced:  " + p.getProduced());
 		System.out.println(c1.getName() + " consumed: " + c1.getConsumed());
 		System.out.println(c2.getName() + " consumed: " + c2.getConsumed());
+	}
+	
+	/**
+	 * Interrupt all threads.
+	 */
+	public static void interruptAllThreads() {
+		for(Thread t : threads)
+			t.interrupt();
 	}
 }

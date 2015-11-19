@@ -37,7 +37,7 @@ public class Consumer extends Thread{
 	public void run() {
 		try {
 			while(!isInterrupted()) {
-				stream.println("removed " + buffer.remove());
+				stream.print("removed " + buffer.remove() + "\n");
 				consumed++;
 				
 			}

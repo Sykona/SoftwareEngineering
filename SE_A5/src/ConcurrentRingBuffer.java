@@ -58,7 +58,7 @@ public class ConcurrentRingBuffer<T> {
 		// we use Math.floorMod since the % operator returns negative remainders in java
 		head = Math.floorMod((head - 1), CAPACITY);
 
-		this.notify();
+		this.notifyAll();
 	}
 	
 	
