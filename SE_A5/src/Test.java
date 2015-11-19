@@ -21,7 +21,7 @@ public class Test {
 	 */
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 		
-		String filePath = "/home/sebastian/Documents/Uni/se/A5/input.txt";
+		String filePath = args[0];
 		File inputFile = new File(filePath);
 		
 		ConcurrentRingBuffer<String> buffer = new ConcurrentRingBuffer<String>(50);
