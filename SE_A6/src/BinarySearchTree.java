@@ -15,6 +15,7 @@ public class BinarySearchTree <V, K extends Comparable<K>> {
 	}
 	
 	public BinarySearchTree() {
+		root = null;
 	}
 	
 	public V search(K key) {
@@ -36,14 +37,18 @@ public class BinarySearchTree <V, K extends Comparable<K>> {
 		while (x != null) {
 			int cmp = key.compareTo(x.key);
 			if (cmp < 0) {
-				if (x.leftChild == null)
+				if (x.leftChild == null) {
 					x.leftChild = new BinaryNode(key, value);
+					return;
+				}
 				else
 					x = x.leftChild;
 			}
 			else if (cmp > 0) {
-				if (x.rightChild == null)
+				if (x.rightChild == null) {
 					x.rightChild = new BinaryNode(key, value);
+					return;
+				}
 				else
 					x = x.rightChild;
 			}
@@ -51,8 +56,12 @@ public class BinarySearchTree <V, K extends Comparable<K>> {
 		root = new BinaryNode(key, value);	//if root is null, set new root
 	}
 	
-	public void delete (K key){
-		BinaryNode x = root;
+	public void delete (K key) {
+		delete(root, key);
+	}
+	
+	private void delete (BinaryNode rootNode, K key) {
+		BinaryNode x = rootNode;
 		BinaryNode parent = null;
 		while (x != null) {
 			int cmp = key.compareTo(x.key);
@@ -76,9 +85,11 @@ public class BinarySearchTree <V, K extends Comparable<K>> {
 					else
 						parent.rightChild = append;
 				}
-				
-				append = treeMinimum(x.rightChild);
-				
+				else {
+					append = treeMinimum(x.rightChild);
+					parent.value = append.value;
+					delete(x.rightChild, append.key);
+				}
 			}
 		}
 	}
