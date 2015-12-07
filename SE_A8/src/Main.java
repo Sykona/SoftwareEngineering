@@ -1,5 +1,4 @@
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Main {
 
@@ -11,7 +10,10 @@ public class Main {
 		}
 		reader.close();
 		
-		
+		OutputStream output = new FileOutputStream(new File("output.txt"));
+		BufferedWriter write = new BufferedWriter(new OutputStreamWriter(output));
+		write.write("Alle meine Entchen schwimmen auf dem See, Köpfchen in das Wassser, Schwänzchen in die Höh!");
+		write.close();
 	}
 
 }
