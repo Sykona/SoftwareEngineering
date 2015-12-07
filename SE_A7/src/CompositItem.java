@@ -11,14 +11,23 @@ public class CompositItem implements Item {
 		children = new ArrayList<Item>();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public List<Item> getChildren() {
 		return children;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	public void add(Item item) {
 		children.add(item);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	public double getPrice() {
 		
 		double price = 0;
@@ -29,10 +38,16 @@ public class CompositItem implements Item {
 		return price;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getName() {
 		return this.name;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	public Item find(String name) {
 		
 		Item item = null;

@@ -1,5 +1,5 @@
 
-public class BookItem extends PrimitiveItem {
+public class BookItem extends ComponentItem {
 	
 	private final String ISBN;
 	

@@ -11,8 +11,6 @@ public class Main {
 		
 		Item root = XMLConverter.process(args[0]);
 		
-		
-		
 		Scanner scanner = new Scanner(System.in);
 		String name = "";
 		
