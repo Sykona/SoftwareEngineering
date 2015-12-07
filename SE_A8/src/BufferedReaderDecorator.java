@@ -56,7 +56,7 @@ public class BufferedReaderDecorator extends BufferedReader {
 		String toEncrypt = super.readLine();
 		StringBuilder sb = new StringBuilder();
 		for (char c : toEncrypt.toCharArray() ) {
-			sb.append(rot13encrypt(c));
+			sb.append((char) rot13encrypt(c));
 		}
 		return sb.toString();
 	}
