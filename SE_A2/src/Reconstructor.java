@@ -29,6 +29,7 @@ public class Reconstructor {
 	 * @param c the given class
 	 * @param ps the printstream
 	 */
+	@SuppressWarnings("rawtypes")
 	public void reconstruct(Class c, PrintStream ps) {
 
 		
@@ -134,6 +135,7 @@ public class Reconstructor {
 	 *
 	 * @throws ClassNotFoundException if the given class name cannot be found
 	 */
+	@SuppressWarnings("rawtypes")
 	public void reconstruct(String fullClassname, PrintStream ps) throws ClassNotFoundException {
 		
 		Class myClass = Class.forName(fullClassname);
@@ -147,6 +149,7 @@ public class Reconstructor {
 	 * @param c the c
 	 * @return the imports
 	 */
+	@SuppressWarnings("rawtypes")
 	private HashSet<Class> getImports(Class c) {
 		
 		HashSet<Class> usedClasses = new HashSet<Class>();
@@ -210,6 +213,7 @@ public class Reconstructor {
 	 * @param c the c
 	 * @return the interfaces string
 	 */
+	@SuppressWarnings("rawtypes")
 	private String getInterfacesString(Class c) {
 
 		StringBuilder interfacesSB = new StringBuilder();
@@ -234,6 +238,7 @@ public class Reconstructor {
 	 * @param c the c
 	 * @return the fields string
 	 */
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private String getFieldsString(Class c) {
 
 		Field[] fields = c.getDeclaredFields();
@@ -259,6 +264,7 @@ public class Reconstructor {
 	 * @param constructor the constructor
 	 * @return the parameters string
 	 */
+	@SuppressWarnings("rawtypes")
 	private String getParametersString(Constructor constructor) {
 
 		StringBuilder parametersSB = new StringBuilder();			
@@ -311,6 +317,7 @@ public class Reconstructor {
 	 * @param constructor the constructor
 	 * @return the exceptions string
 	 */
+	@SuppressWarnings("rawtypes")
 	private String getExceptionsString(Constructor constructor) {
 		
 		StringBuilder exceptionsSB = new StringBuilder();
@@ -337,6 +344,7 @@ public class Reconstructor {
 	 * @param method the method
 	 * @return the exceptions string
 	 */
+	@SuppressWarnings("rawtypes")
 	private String getExceptionsString(Method method) {
 		
 		StringBuilder exceptionsSB = new StringBuilder();
