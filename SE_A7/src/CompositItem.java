@@ -1,32 +1,44 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class CompositItem.
+ * A CompositItem is a composition of Items (CompositItems and/or PrimitiveItems)
+ * 
+ * @author Oliver Remy
+ * @author Sebastian Strumegger
+ */
 public class CompositItem implements Item {
 	
 	List<Item> children;
 	String name;
 	
+	/**
+	 * Instantiates a new composit item.
+	 *
+	 * @param name the name
+	 */
 	public CompositItem(String name) {
 		this.name = name;
 		children = new ArrayList<Item>();
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see Item#getChildren()
 	 */
 	public List<Item> getChildren() {
 		return children;
 	}
 	
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see Item#add(Item)
 	 */
 	public void add(Item item) {
 		children.add(item);
 	}
 	
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see Item#getPrice()
 	 */
 	public double getPrice() {
 		
@@ -38,15 +50,15 @@ public class CompositItem implements Item {
 		return price;
 	}
 	
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see Item#getName()
 	 */
 	public String getName() {
 		return this.name;
 	}
 	
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see Item#find(java.lang.String)
 	 */
 	public Item find(String name) {
 		

@@ -11,8 +11,23 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * The Class XMLConverter.
+ * 
+ * @author Oliver Remy
+ * @author Sebastian Strumegger
+ */
 public class XMLConverter {
 	
+	/**
+	 * Recursively builds a tree-like structure of Items and returns the root item
+	 *
+	 * @param fileName the file name
+	 * @return the root-item
+	 * @throws ParserConfigurationException the parser configuration exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws SAXException the SAX exception
+	 */
 	public static Item process(String fileName) throws ParserConfigurationException, IOException, SAXException {
 		
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -29,10 +44,11 @@ public class XMLConverter {
 		return rootItem;
 	}
 	
+	// private helping method for building our item-tree-structure
 	private static void traverseTree(Element rootElement, Item rootItem) {
 		
 		NodeList nodes = rootElement.getChildNodes();
-
+		
 		for (int i=0; i < nodes.getLength(); i++) {
 			
 			Node node = nodes.item(i);
@@ -40,35 +56,26 @@ public class XMLConverter {
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				
 				Element childElement = (Element) node;
-				
 				String name = childElement.getAttribute("name");
 				
-				
 				if(childElement.hasChildNodes()) {
-					
 					Item childItem = new CompositItem(name);
 					rootItem.add(childItem);
-					
 					traverseTree(childElement, childItem);
 				}
 				else {
 					String itemType = childElement.getTagName();
 					Item childItem;
-					
 					double price = Double.parseDouble(childElement.getAttribute("price"));
 					
 					switch(itemType) {
-					
 						case "book":	String isbn = childElement.getAttribute("isbn");
 										childItem = new BookItem(name, price, isbn);
 										break;
-										
 						case "cd":		childItem = new CDItem(name, price);
-										break;
-										
+										break;			
 						default:		throw new RuntimeException("The Item-type <" + itemType + "> is unknown");
 					}
-					
 					rootItem.add(childItem);
 				}	
 			}

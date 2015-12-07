@@ -1,45 +1,47 @@
 import java.util.List;
 
 /**
- * This interface implements the standard item of
- * of an item list (e.g. books, cds, ...)
+ * The Interface Item, based on Composit-Designpattern.
+ * Items can be either Compositions of Items or primitive Items
  * 
  * @author Oliver Remy
  * @author Sebastian Strumegger
  */
-
 public interface Item {
 	
 	/**
-	 * Gets the children, if there are one
-	 * @return 	the children of the item, 
-	 * 			otherwise returning empty list
-	 */
-	public List<Item> getChildren();
-	
-	/**
-	 * Gets or calculates the price of an item
-	 * @return 	the calculated price
-	 */
-	public double getPrice();
-	
-	/**
-	 * Gets the name of the item
-	 * @return	the name of the item
+	 * Gets the name.
+	 *
+	 * @return the name
 	 */
 	public String getName();
 	
 	/**
-	 * Finds the item with the given name if exists
-	 * @param 	name the item name which we are searching
-	 * @return	the item if its found,
-	 * 			otherwise returning null
+	 * Gets the price.
+	 *
+	 * @return the price
+	 */
+	public double getPrice();
+	
+	/**
+	 * Gets the children.
+	 *
+	 * @return the children
+	 */
+	public List<Item> getChildren();
+	
+	/**
+	 * Find.
+	 *
+	 * @param name the name
+	 * @return the item
 	 */
 	public Item find(String name);
 	
 	/**
-	 * Adds the given item
-	 * @param item the item we want to add
+	 * Adds the.
+	 *
+	 * @param item the item
 	 */
 	public void add(Item item);
 
