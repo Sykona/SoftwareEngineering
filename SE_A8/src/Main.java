@@ -50,7 +50,15 @@ public class Main {
 			System.out.print((char) rot13Reader.read());
 		}
 		
-		upperWriter.close();
+		// Now we check the statistic writer which also decorates the Writer classes
+		StatisticsWriter statisticWriter = new StatisticsWriter(upperWriter);
+		statisticWriter.write("\nALLE MEINE ENTCHEN SCHWIMMEN AUF DEM SEE, KÖPFCHEN IN DAS WASSER, SCHWÄNZCHEN IN DIE HÖH!\n");
+		statisticWriter.write(rot13ciphered);
+		statisticWriter.close();
+		while(buffReader.ready()) {
+			System.out.print((char) buffReader.read());
+		}
+		
 		rot13Reader.close();
 	}
 
