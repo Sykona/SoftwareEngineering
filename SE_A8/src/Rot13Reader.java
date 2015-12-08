@@ -2,17 +2,32 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 
+/**
+ * This class decorates the reader classes out the java.io package so that
+ * every character is read is ciphered with rot13
+ * 
+ * @author Oliver Remy
+ * @author Sebastian Strumegger
+ *
+ */
+
 public class Rot13Reader extends ReaderDecorator {
 
 	public Rot13Reader(Reader readerToBeDecorated) {
 		super(readerToBeDecorated);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int read () throws IOException {
 		return rot13encrypt(readerToBeDecorated.read());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int read (char[] cbuf, int offset, int length) throws IOException {
 		int temp = super.read(cbuf, offset, length);
@@ -22,6 +37,9 @@ public class Rot13Reader extends ReaderDecorator {
 		return temp;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int read (CharBuffer target) throws IOException {
 		int temp = readerToBeDecorated.read(target);
