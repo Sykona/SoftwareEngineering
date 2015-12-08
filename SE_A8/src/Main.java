@@ -1,8 +1,8 @@
 import java.io.*;
 
 /**
- * Test Class for our Rot13Reader and the UpperCaseWriter, which
- * decorate the Reader respectively the Writer class.
+ * Test Class for our Rot13Reader, UpperCaseWriter and the StatisticsWriter,
+ * which decorate the Reader respectively the Writer class.
  * 
  * @author Oliver Remy
  * @author Sebastian Strumegger
