@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="SE_A9" basedir="." default="build">
+
+	<target name="build" depends="clean">
+		<mkdir dir="build" />
+		<mkdir dir="dist" />
+		<copy todir="build">
+			<fileset dir="src" />
+		</copy>
+		<javac includeantruntime="false" srcDir="src" destDir="build" debug="false" deprecation="true" optimize="true" classpath="." />
+		<jar jarfile="dist/StudentManager.jar" manifest="manifest">
+			<fileset dir="build" />
+		</jar>
+	</target>
+
+	<target name="run" depends="build">
+		<java jar="dist/StudentManager.jar" fork="true" />
+	</target>
+	
+	<target name="javadoc">
+		<mkdir dir="doc" />
+		<javadoc destdir="doc">
+			<fileset dir="src" />
+		</javadoc>
+	</target>
+
+	<target name="clean">
+		<delete dir="build" />
+		<delete dir="dist" />
+		<delete dir="doc" />
+		<mkdir dir="build"/>
+		<mkdir dir="dist"/>
+		<mkdir dir="doc"/>
+	</target>
+</project>
