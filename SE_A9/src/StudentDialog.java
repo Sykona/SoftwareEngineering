@@ -7,13 +7,26 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
+/**
+ * The Class StudentDialog.
+ * Extends the JavaFX Dialog to create a custom dialog.
+ * 
+ * @author Oliver Remy
+ * @author Sebastian Strumegger
+ */
 public class StudentDialog extends Dialog<Student>{
-	
+
     private TextField matNrTF = new TextField();
     private TextField nameTF = new TextField();
     private TextField surnameTF = new TextField();
 
     
+    /**
+     * Instantiates a new student dialog.
+     *
+     * @param title the title
+     * @param student the student
+     */
     public StudentDialog(String title, Student student) {
     	
         setTitle(title);
@@ -23,6 +36,8 @@ public class StudentDialog extends Dialog<Student>{
         Label nameLabel= new Label("Name: ");
         Label surnameLabel = new Label("Surname: ");       
         
+        // a student given in the constructor means, we rename this student
+        // the matriculation number must not be editable
         if (student != null) {
         	matNrTF.setText("" + student.getMatNr());
         	matNrTF.setEditable(false);
@@ -46,24 +61,36 @@ public class StudentDialog extends Dialog<Student>{
         getDialogPane().getButtonTypes().addAll(ok, cancel);
         getDialogPane().setContent(dPane);        
         
-	   	 final Button OKButton = (Button) getDialogPane().lookupButton(ok);
-	   	 OKButton.addEventFilter(ActionEvent.ACTION, event -> {
-	   	     if (!validateInput()) {
-	   	         event.consume();
-	   	     }
-	   	    	 
-	   	 });
         
+        // if the input is not valid, consume the event
+        final Button OKButton = (Button) getDialogPane().lookupButton(ok);
+        OKButton.addEventFilter(ActionEvent.ACTION, event -> {
+        	if (!validateInput()) {
+        		event.consume();
+        	}
+	   	    	 
+        });
+        
+        // since we have a custom dialog, the resultconverter needs to be set
+        // it returns a new student as a result
         setResultConverter(button -> {
         	if (button == ok) 	{
-        			return new Student(Integer.parseInt(matNrTF.getText()), nameTF.getText(), surnameTF.getText());	
+        		return new Student(Integer.parseInt(matNrTF.getText()), nameTF.getText(), surnameTF.getText());	
         	}
   
         	return null;
         });
-    }
+	}
     
     
+    /**
+     * Validates input and colors wrong/right input fields
+     * Rules:
+     * 		- Each Textfield must not be empty
+     * 		- The matriculation number must be an integer
+     *
+     * @return true, if successful
+     */
     private boolean validateInput() {
     	String matNr = "^\\d+$";
     	String name = "^.+$";

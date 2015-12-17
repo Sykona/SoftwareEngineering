@@ -5,7 +5,7 @@
 		<mkdir dir="build" />
 		<mkdir dir="dist" />
 		<copy todir="build">
-			<fileset dir="rsrc" />
+			<fileset dir="src" />
 		</copy>
 		<javac includeantruntime="false" srcDir="src" destDir="build" debug="false" deprecation="true" optimize="true" classpath="." />
 		<jar jarfile="dist/Reconstructor.jar" manifest="manifest">
