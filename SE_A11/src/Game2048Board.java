@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Game2048Board {
 	
@@ -21,34 +24,25 @@ public class Game2048Board {
 		return sb.toString();
 	}
 	
-	public void slideRight() {
-		
+	public void addRandomCell() {
+		List<Cell> list = availableCells();
+		if (!list.isEmpty()) {
+			int index = new Random().nextInt(list.size());
+			list.get(index).setValue( Math.random() < 0.9 ? 2 : 4 );
+		}
 	}
 	
-	public void slideLeft() {
-		rotateRight();
-		rotateRight();
-		slideRight();
-		rotateRight();
-		rotateRight();
+	private List<Cell> availableCells() {
+		final List<Cell> list = new ArrayList<Cell>();
+		for (Cell[] cArr: board) {
+			for (Cell c: cArr) {
+				if (c.isEmpty())
+					list.add(c);
+			}
+		}
+		return list;
 	}
-	
-	public void slideUp() {
-		rotateRight();
-		slideRight();
-		rotateRight();
-		rotateRight();
-		rotateRight();
-	}
-	
-	public void slideDown() {
-		rotateRight();
-		rotateRight();
-		rotateRight();
-		slideRight();
-		rotateRight();
-	}
-	
+
 	public void rotateRight() {
 		final int X = board.length;
 		Cell[][] ret = new Cell[X][X];

@@ -1,10 +1,8 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class StandardCell extends Cell {
 	
 	final int[] values = { 2 , 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
-	private int value = 0;
 	
 	public StandardCell() {
 	}
@@ -33,16 +31,8 @@ public class StandardCell extends Cell {
 
 	@Override
 	public List<Cell> merge(List<Cell> line) {
-		ArrayList<Cell> list = new ArrayList<Cell>();
-		
-		boolean merged = false;
-		for (int i = 0; i < line.size() && !line.get(i).isEmpty(); i ++) {
-			for (int j = i+1; j < line.size() && !line.get(j).isEmpty() && !merged ; j ++) {
-				
-			}
-		}
-				
-		return list;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
