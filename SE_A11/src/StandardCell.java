@@ -1,4 +1,3 @@
-import java.util.List;
 
 public class StandardCell extends Cell {
 	
@@ -27,12 +26,6 @@ public class StandardCell extends Cell {
 			return String.format("%4s", " ");
 		else
 			return String.format("%4s", value);
-	}
-
-	@Override
-	public List<Cell> merge(List<Cell> line) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 }

@@ -1,4 +1,3 @@
-import java.util.List;
 
 public abstract class Cell{
 	
@@ -13,8 +12,13 @@ public abstract class Cell{
 		this.value = value;
 	}
 	
+	public void increaseShift(int shift) {
+		this.shift += shift;
+	}
+	
+	public int getShift() {
+		return shift;
+	}
+	
 	public abstract boolean isEmpty();
-	
-	public abstract List<Cell> merge(List<Cell> line);
-	
 }
