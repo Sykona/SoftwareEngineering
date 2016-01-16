@@ -28,4 +28,25 @@ public class StandardCell extends Cell {
 			return String.format("%4s", value);
 	}
 	
+	public boolean merge (Cell c) {
+		if (c.isEmpty() || isEmpty()) {
+			return false;
+		} else if (c.getValue() == value) {
+			value *= 2;
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int getScore() {
+		return value + bonusScore;
+	}
+
+	@Override
+	public boolean isVisible() {
+		return true;
+	}
+	
+	
 }

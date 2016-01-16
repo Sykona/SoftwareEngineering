@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -91,7 +92,24 @@ public class Game2048 {
 		List<Cell> list = availableCells();
 		if (!list.isEmpty()) {
 			int index = new Random().nextInt(list.size());
-			list.get(index).setValue( Math.random() < 0.9 ? 2 : 4 );
+			Cell c = list.get(index);
+			int line = 0;
+			int row = 0;
+			for (int i = 0; i < 4; i ++) {
+				for (int j = 0; j < 4; j ++) {
+					if (board[i][j].equals(c)) {
+						line = i;
+						row = j;
+					}
+				}
+			}
+			double rnd = Math.random();
+			if (rnd < 0.8)
+				board[line][row] = new StandardCell(2);
+			else if (rnd < 0.9 && rnd >= 0.8)
+				board[line][row] = new StandardCell(4);
+			else 
+				board[line][row] = new BonusCell();
 		}
 	}
 	
@@ -133,11 +151,10 @@ public class Game2048 {
 				Cell temp = oldLine[i];
 				int j = i + 1;
 				while (j < 4) {
-					if (oldLine[j].getValue() != 0 && temp.getValue() != oldLine[j].getValue()) {
+					if (!temp.merge(oldLine[j])) {
 						j = 3;
-					} else if (temp.getValue() == oldLine[j].getValue()) {
-						temp.setValue(temp.getValue() * 2);
-						score += temp.getValue();
+					} else if (temp.merge(oldLine[j]) || oldLine[j].merge(temp)) {
+						score += temp.getScore();
 						temp.increaseShift(oldLine[j].getShift() + (j-i));
 						if (temp.getValue() == 2048)
 							win = true;
@@ -146,7 +163,10 @@ public class Game2048 {
 					j ++;
 				}
 				temp.increaseShift(shift);
-				newLine.add(temp);
+				if (!temp.isVisible())
+					newLine.add(new StandardCell());
+				else
+					newLine.add(temp);
 			}
 			else { shift ++; }
 		}
@@ -165,10 +185,8 @@ public class Game2048 {
 		for (int i = 0; i < 4; i ++) {
 			Cell[] oldLine = board[i];
 			Cell[] newLine = mergeLinetoLeft(oldLine);
-			for (int j = 0; j < 4; j ++) {
-				if (oldLine[i].getValue() != newLine[i].getValue())
+			if (!Arrays.equals(oldLine, newLine))
 					changed = true;
-			}
 			board[i] = newLine;
 		}
 		if (!isFull() && changed) {

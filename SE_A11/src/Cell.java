@@ -3,6 +3,7 @@ public abstract class Cell{
 	
 	protected int shift = 0;
 	protected int value = 0;
+	protected int bonusScore = 0;
 	
 	public int getValue() {
 		return value;
@@ -21,4 +22,10 @@ public abstract class Cell{
 	}
 	
 	public abstract boolean isEmpty();
+	
+	public abstract boolean merge(Cell c);
+	
+	public abstract int getScore();
+	
+	public abstract boolean isVisible();
 }
