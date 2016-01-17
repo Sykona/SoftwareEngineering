@@ -3,11 +3,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
+/**
+ * This class represents our 2048 game
+ * @author Oliver Remy
+ * @author Sebastian Strumegger
+ *
+ */
 public class Game2048 {
 	
 	private Cell[][] board;
-	int score;
+	private int score;
 	private boolean win;
 	
 	public Game2048() {
@@ -43,7 +48,7 @@ public class Game2048 {
 		}
 		
 		if (isLoose()) {
-			System.out.print("Game over! Your score was: " + getScore() + " Points!");
+			System.out.print("Game over! Your score was: " + score + " Points!");
 			s.close();
 		}
 	}
@@ -60,18 +65,14 @@ public class Game2048 {
 	}
 	
 	
-	public boolean isWin() {
+	private boolean isWin() {
 		return win;
 	}
 	
-	public boolean isLoose() {
+	private boolean isLoose() {
 		if (!isWin() && !canMove())
 			return true;
 		return false;
-	}
-	
-	public int getScore() {
-		return score;
 	}
 	
 	@Override
@@ -88,7 +89,10 @@ public class Game2048 {
 		return sb.toString();
 	}
 	
-	public void addRandomCell() {
+	/**
+	 * adds a new random cell to a free one with 80% approx a '2' with 10% a '4' and with another 10% a bonus cell '@'
+	 */
+	private void addRandomCell() {
 		List<Cell> list = availableCells();
 		if (!list.isEmpty()) {
 			int index = new Random().nextInt(list.size());
@@ -113,6 +117,9 @@ public class Game2048 {
 		}
 	}
 	
+	/**
+	 * @return a list of available cells
+	 */
 	private List<Cell> availableCells() {
 		final List<Cell> list = new ArrayList<Cell>();
 		for (Cell[] cArr: board) {
@@ -124,11 +131,17 @@ public class Game2048 {
 		return list;
 	}
 	
+	/**
+	 * @return wether no cell is free
+	 */
 	private boolean isFull() {
 		return availableCells().size() == 0;
 	}
 	
-	public boolean canMove() {
+	/**
+	 * @return wether a move is possible
+	 */
+	private boolean canMove() {
 		if (!isFull()) {
 			return true;
 		}
@@ -142,6 +155,11 @@ public class Game2048 {
 		return false;
 	}
 	
+	/**
+	 * merges a line to left
+	 * @param oldLine the line to be merged
+	 * @return the merged line
+	 */
 	private Cell[] mergeLinetoLeft(Cell[] oldLine) {
 		ArrayList<Cell> newLine = new ArrayList<Cell>();
 		int shift = 0;
@@ -151,21 +169,22 @@ public class Game2048 {
 				Cell temp = oldLine[i];
 				int j = i + 1;
 				while (j < 4) {
-					if (!temp.merge(oldLine[j])) {
+					boolean merge = temp.merge(oldLine[j]);
+					if (!merge && !oldLine[j].isEmpty()) {
 						j = 3;
-					} else if (temp.merge(oldLine[j]) || oldLine[j].merge(temp)) {
+					} else if (merge || oldLine[j].merge(temp)) {
 						score += temp.getScore();
+						temp.setBonusScore(0);
 						temp.increaseShift(oldLine[j].getShift() + (j-i));
 						if (temp.getValue() == 2048)
 							win = true;
 						i += j - i;
+						j = 4;
 					}
 					j ++;
 				}
 				temp.increaseShift(shift);
-				if (!temp.isVisible())
-					newLine.add(new StandardCell());
-				else
+				if (temp.isVisible())
 					newLine.add(temp);
 			}
 			else { shift ++; }
@@ -180,7 +199,10 @@ public class Game2048 {
 		}
 	}
 	
-	public void leftMove () {
+	/**
+	 * does a left move to the board
+	 */
+	private void leftMove () {
 		boolean changed = false;
 		for (int i = 0; i < 4; i ++) {
 			Cell[] oldLine = board[i];
@@ -194,7 +216,10 @@ public class Game2048 {
 		}
 	}
 	
-	public void rightMove () {
+	/**
+	 * does a right move to the board
+	 */
+	private void rightMove () {
 		rotateRight();
 		rotateRight();
 		leftMove();
@@ -202,7 +227,10 @@ public class Game2048 {
 		rotateRight();
 	}
 	
-	public void upMove () {
+	/**
+	 * does a up move to the board
+	 */
+	private void upMove () {
 		rotateRight();
 		rotateRight();
 		rotateRight();
@@ -210,7 +238,10 @@ public class Game2048 {
 		rotateRight();
 	}
 	
-	public void downMove () {
+	/**
+	 * does a down move to the board
+	 */
+	private void downMove () {
 		rotateRight();
 		leftMove();
 		rotateRight();
@@ -218,8 +249,9 @@ public class Game2048 {
 		rotateRight();
 	}
 	
-	
-
+	/**
+	 * rotates the board rightwards
+	 */
 	private void rotateRight() {
 		final int X = board.length;
 		Cell[][] ret = new Cell[X][X];

@@ -1,4 +1,10 @@
-
+/**
+ * This class represents the bonus cell for our 2048 game
+ * 
+ * @author Oliver Remy
+ * @author Sebastian Strumegger
+ *
+ */
 public class BonusCell extends Cell {
 	private int count = 0;
 	final char column = '@';
@@ -7,6 +13,9 @@ public class BonusCell extends Cell {
 		value = 0;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isEmpty() {
 		if (count != 0) 
@@ -15,11 +24,15 @@ public class BonusCell extends Cell {
 			return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean merge(Cell c) {
 		if (count == 0 && !c.isEmpty()) {
 			count ++;
 			c.bonusScore += c.value;
+			value = c.value * 2;
 			return true;
 		}
 		else return false;
@@ -40,10 +53,19 @@ public class BonusCell extends Cell {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isVisible() {
 		if (count != 0)
 			return false;
 		return true;
+	}
+	
+	@Override
+	public void increaseShift(int shift) {
+		count ++;
+		super.increaseShift(shift);
 	}
 }
